@@ -17,26 +17,17 @@ def deadlock(mutex, data):
     time.sleep(1)
 
 
-# run the releasing function - should print all 10 in any order
-def run_do_something():
-    print "Running release..."
+# runner: starts up processes and passes lock, injectable target function
+def runner(name, func):
+    print "Running %s..." % name
     mutex = Lock()
     for i in range(0, 10):
-        p = Process(target=do_something, args=(mutex, i))
-        p.start()
-
-
-# run the deadlock function - should lock forever after first process
-def run_deadlock():
-    print "Running deadlock..."
-    mutex = Lock()
-    for i in range(0, 10):
-        p = Process(target=deadlock, args=(mutex, i))
+        p = Process(target=func, args=(mutex, i))
         p.start()
 
 
 if __name__ == '__main__':
-    run_do_something()
-    run_deadlock()
+    runner("release", do_something)
+    runner("deadlock", deadlock)
 
 
