@@ -11,12 +11,18 @@ class HashTable:
 
     def hash_builder(self, size):
         # create a closure with size set
-        def actual_hash(key):
-            # TODO: try to implement real Python string hash function
-            total = reduce(lambda acc, i: acc + ord(i), [c for c in key], 0)
-            # use modulo to find index
-            return total % size
-        return actual_hash
+        def better_hash(str):
+            x = ord(str[0]) << 7
+            for chr in str[1:]:
+                x = ((1000003 * x) ^ ord(chr))
+            x = (x ^ len(str))
+            x = x % size
+            return int(x)
+        # def basic_hash(key):
+        #     total = reduce(lambda acc, i: acc + ord(i), [c for c in key], 0)
+        #     return total % size
+
+        return better_hash
 
     def get(self, key):
         idx = self.hash(key)
@@ -51,7 +57,7 @@ if __name__ == '__main__':
     list_size = 10
     table = HashTable(list_size)
 
-    # set some key/ values
+    # set some keys / values
     table.set("apple", 3)
     table.set("zebra", 5)
 
@@ -59,9 +65,21 @@ if __name__ == '__main__':
     assert table.get("zebra") == 5
     assert table.get("apple") == 3
 
-    # try a collision
+    # try collisions:
+    # ... lapep and apple will collide for basic_hash
+    # ... zebra and coconaut will collide for better_hash
     table.set("lapep", 8)
+    table.set("coconaut", 7)
     assert table.get("apple") == 3
     assert table.get("lapep") == 8
+    assert table.get("coconaut") == 7
+
+    # check it out
+    print table.buckets
+
+
+
+
+
 
 
