@@ -1,12 +1,21 @@
-__author__ = 'Alexander'
+__author__ = 'coconaut'
 
 # Hash Table practice. Yes, I know that Python dictionaries are built-in hashtables.
 
 class HashTable:
-    # TODO: resizing?
-    def __init__(self, size, hash_func):
+    # TODO: resizing when load factor reaches a certain level?
+    def __init__(self, size):
         self.buckets = [None]*size
+        hash_func = self.hash_builder(size)
         self.hash = hash_func
+
+    def hash_builder(self, size):
+        # create a closure with size set
+        def actual_hash(key):
+            total = reduce(lambda acc, i: acc + ord(i), [c for c in key], 0)
+            # use module to find index
+            return total % size
+        return actual_hash
 
     def get(self, key):
         idx = self.hash(key)
@@ -36,21 +45,10 @@ class HashTable:
             if not update:
                 self.buckets[idx].append((key, value))
 
-
-# could make higher order with functools partial
-def hasher(size):
-    # create a closure with size set
-    def actual_hash(key):
-        total = reduce(lambda acc, i: acc + ord(i), [c for c in key], 0)
-        # use module to find index
-        return total % size
-    return actual_hash
-
 if __name__ == '__main__':
     # create hash table
     list_size = 10
-    hashing_func = hasher(list_size)
-    table = HashTable(10, hashing_func)
+    table = HashTable(list_size)
 
     # set some key/ values
     table.set("apple", 3)
@@ -64,4 +62,5 @@ if __name__ == '__main__':
     table.set("lapep", 8)
     assert table.get("apple") == 3
     assert table.get("lapep") == 8
+
 
