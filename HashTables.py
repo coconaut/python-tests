@@ -12,8 +12,9 @@ class HashTable:
     def hash_builder(self, size):
         # create a closure with size set
         def actual_hash(key):
+            # TODO: try to implement real Python string hash function
             total = reduce(lambda acc, i: acc + ord(i), [c for c in key], 0)
-            # use module to find index
+            # use modulo to find index
             return total % size
         return actual_hash
 
