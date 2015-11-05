@@ -3,7 +3,6 @@ import sys
 
 # Dijksta's algorithm for shortest distance between vertices in a graph
 
-
 class Vertex:
     def __init__(self, key):
         self.key = key
@@ -130,7 +129,7 @@ if __name__ == '__main__':
     # find shortest path from 1 to 5
     dest = res[5]
     path = rec_node_walker(dest, [])
-    print "Shortest path from 1 to 6: %s" % path
+    print "Shortest path from 1 to 5: %s" % path
 
 
 # TODO: Bellman-Ford?
