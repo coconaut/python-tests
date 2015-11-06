@@ -3,16 +3,13 @@ __author__ = 'coconaut'
 
 def _merge(left, right):
     res = []
-    len_left = len(left)
-    len_right = len(right)
+
     # merge the two sorted halves, comparing one elem at a time
-    while len_left > 0 and len_right > 0:
+    while left and right:
         if left[0] <= right[0]:
             res.append(left.pop(0))
-            len_left -= 1
         else:
             res.append(right.pop(0))
-            len_right -= 1
 
     # add the remaining of either surviving set to result, return it
     return res + left + right
