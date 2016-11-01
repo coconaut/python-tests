@@ -1,8 +1,10 @@
 class Heap:
     def __init__(self, arr):
         self.array = arr
-        self.length = len(arr)
-        self.heap_size = self.length
+        self.heap_size = len(arr)
+
+    def __len__(self):
+        return len(self.array)
 
     def at(self, i):
         return self.array[i]
@@ -12,15 +14,15 @@ class Heap:
 
 
 def parent(i):
-    return i / 2  # will take floor anyway
+    return (i - 1) / 2  # will take floor anyway
 
 
 def left(i):
-    return 2 * i
+    return 2 * i + 1
 
 
 def right(i):
-    return 2 * i + 1
+    return 2 * i + 2
 
 
 def in_heap(heap, i):
@@ -45,7 +47,7 @@ def max_heapify(heap, i):
 
 def build_max_heap(arr):
     heap = Heap(arr)
-    mid = heap.length / 2  # will take floor anyway
+    mid = len(heap) / 2  # will take floor anyway
     for i in range(mid, -1, -1):
         max_heapify(heap, i)
     return heap
@@ -53,7 +55,7 @@ def build_max_heap(arr):
 
 def heap_sort(arr):
     heap = build_max_heap(arr)
-    for i in range(heap.length - 1, 0, -1):
+    for i in range(len(heap) - 1, 0, -1):
         tmp = heap.at(i)
         fst = heap.at(0)
         heap.put(i, fst)
