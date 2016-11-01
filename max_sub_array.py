@@ -1,7 +1,5 @@
 """
 Maximum sub-array problem.
-[Chapter 4, Section 4.1.
-
 Given an array of positive and negative integers,
 find the maximum sub-array.
 """
